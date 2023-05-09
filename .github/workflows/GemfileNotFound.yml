@@ -1,0 +1,73 @@
+name: Demonstration of Bundler::GemfileNotFound error.
+on:
+  workflow_dispatch:
+permissions: {}
+defaults:
+  run:
+    shell: bash
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - summary: "New, Without ✅ --"
+          description: "Newest dependabot, reading directory without a Gemfile.lock"
+          ruby-version: 3.1.0
+          rubygems: 3.4.12
+          dependabot-version: 0.217.0
+          repository: 'dependabot/dependabot-core'
+          checkout-path: 'dependabot-core'
+          internal-repo-path: '/bundler'
+        - summary: "Old, Without ✅ --"
+          description: "Last dependabot for ruby 2.7, reading directory without a Gemfile.lock"
+          ruby-version: 2.7
+          rubygems: 'latest'
+          dependabot-version: 0.212.0
+          repository: 'dependabot/dependabot-core'
+          checkout-path: 'dependabot-core'
+          internal-repo-path: '/bundler'
+        - summary: "New, WITH ❌ --"
+          description: "Newest dependabot, reading directory WITH a Gemfile.lock"
+          ruby-version: 3.1.0
+          rubygems: 3.4.12
+          dependabot-version: 0.217.0
+          repository: 'dependabot/smoke-tests'
+          checkout-path: 'smoke-tests'
+          internal-repo-path: '/bundler'
+        - summary: "Old, WITH ❌ --"
+          description: "Last dependabot for ruby 2.7, reading directory WITH a Gemfile.lock"
+          ruby-version: 2.7
+          rubygems: 'latest'
+          dependabot-version: 0.212.0
+          repository: 'dependabot/smoke-tests'
+          checkout-path: 'smoke-tests'
+          internal-repo-path: '/bundler'
+    steps:
+    - name: 🔻 Set up Ruby
+      uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c
+      with:
+        ruby-version: ${{ matrix.ruby-version }}
+        rubygems: ${{ matrix.rubygems }}
+        bundler-cache: true
+    - name: 🤖 Install dependabot
+      run: gem install dependabot-omnibus -v ${{ matrix.dependabot-version }}
+    - name: 🏁 Checkout
+      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+      with:
+        repository: ${{ matrix.repository }}
+        path: ${{ matrix.checkout-path }}
+    - name: 👀 Run bundler file fetcher
+      run: |-
+        ruby -e '
+        require "dependabot/source"
+        require "dependabot/omnibus"
+        repo_name = "${{ matrix.repository }}"
+        fetcher_class = Dependabot::Bundler::FileFetcher
+        path_from_here_to_repo_root = "${{ matrix.checkout-path }}"
+        path_from_repo_root_to_some_directory_with_a_gemfile = "${{ matrix.internal-repo-path }}"
+        source = Dependabot::Source.new(provider: "github", repo: repo_name, directory: path_from_repo_root_to_some_directory_with_a_gemfile)
+        fetcher = fetcher_class.new(source: source, credentials: [], repo_contents_path: path_from_here_to_repo_root)
+        puts "Fetched #{fetcher.files.map(&:name)}, at commit SHA-1 #{fetcher.commit}"
+        '
