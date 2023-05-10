@@ -9,7 +9,7 @@ Per the [example workflow](https://github.com/CloutKhan/dependabot-bundler/blob/
 
 So running the bundler file fetcher on a directory with a lockfile will end up with dependabot throwing a `::Bundler::GemfileNotFound`. _Unless a `Gemfile` exists in the directory that the script is being run from_. Or unless a `BUNDLE_GEMFILE` environment variable is set to any garbage value.
 
-The inverse call stack to the point that the `ENV["BUNGLE_GEMFILE"]` is read is
+The inverse call stack to the point that the `ENV["BUNDLE_GEMFILE"]` is read is
 1. [`::Bundler::SharedHelpers::find_gemfile`](https://github.com/rubygems/rubygems/blob/bundler-v2.4.12/bundler/lib/bundler/shared_helpers.rb#L214-L218)
 1. [`::Bundler::SharedHelpers::root`](https://github.com/rubygems/rubygems/blob/bundler-v2.4.12/bundler/lib/bundler/shared_helpers.rb#L13-L17)
 1. [`::Bundler::root`](https://github.com/rubygems/rubygems/blob/bundler-v2.4.12/bundler/lib/bundler.rb#L305C12-L313)
