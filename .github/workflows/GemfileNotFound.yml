@@ -48,7 +48,7 @@ jobs:
           checkout-path: 'smoke-tests'
           internal-repo-path: '/bundler'
           set-env: ''
-        - summary: "New, WITH + ENV ❔ --"
+        - summary: "New, WITH + ENV ✅ --"
           description: "Newest dependabot, reading directory WITH a Gemfile.lock, but also set the path with env BUNDLE_GEMFILE"
           ruby-version: 3.1.0
           rubygems: 3.4.12
@@ -57,6 +57,24 @@ jobs:
           checkout-path: 'smoke-tests'
           internal-repo-path: '/bundler'
           set-env: 'ENV["BUNDLE_GEMFILE"] = "smoke-tests/bundler/Gemfile"'
+        - summary: "Old, WITH + ENV ✅ --"
+          description: "Last dependabot for ruby 2.7, reading directory WITH a Gemfile.lock, but also set the path with env BUNDLE_GEMFILE"
+          ruby-version: 2.7
+          rubygems: 'latest'
+          dependabot-version: 0.212.0
+          repository: 'dependabot/smoke-tests'
+          checkout-path: 'smoke-tests'
+          internal-repo-path: '/bundler'
+          set-env: 'ENV["BUNDLE_GEMFILE"] = "smoke-tests/bundler/Gemfile"'
+        - summary: "New, WITH + ENV (fake) ❔ --"
+          description: "Newest dependabot, reading directory WITH a Gemfile.lock, but also set the path with env BUNDLE_GEMFILE, but set it to garbage."
+          ruby-version: 3.1.0
+          rubygems: 3.4.12
+          dependabot-version: 0.217.0
+          repository: 'dependabot/smoke-tests'
+          checkout-path: 'smoke-tests'
+          internal-repo-path: '/bundler'
+          set-env: 'ENV["BUNDLE_GEMFILE"] = "a/b/c"'
     steps:
     - name: 🔻 Set up Ruby
       uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c
