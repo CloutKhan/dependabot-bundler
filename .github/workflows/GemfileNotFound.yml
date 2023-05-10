@@ -66,7 +66,7 @@ jobs:
           checkout-path: 'smoke-tests'
           internal-repo-path: '/bundler'
           set-env: 'ENV["BUNDLE_GEMFILE"] = "smoke-tests/bundler/Gemfile"'
-        - summary: "New, WITH + ENV (fake) ❔ --"
+        - summary: "New, WITH + ENV (fake) ✅ --"
           description: "Newest dependabot, reading directory WITH a Gemfile.lock, but also set the path with env BUNDLE_GEMFILE, but set it to garbage."
           ruby-version: 3.1.0
           rubygems: 3.4.12
@@ -91,6 +91,8 @@ jobs:
       with:
         repository: ${{ matrix.repository }}
         path: ${{ matrix.checkout-path }}
+    - name: 📑 bundle env
+      run: bundle env
     - name: 👀 Run bundler file fetcher
       run: |-
         ruby -e '
