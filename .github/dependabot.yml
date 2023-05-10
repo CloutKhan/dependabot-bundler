@@ -1,0 +1,10 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/lock-and-file"
+  schedule:
+    interval: weekly
+- package-ecosystem: bundler
+  directory: "/lock-only"
+  schedule:
+    interval: weekly
