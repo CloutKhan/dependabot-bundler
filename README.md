@@ -21,3 +21,5 @@ The inverse call stack to the point that the `ENV["BUNGLE_GEMFILE"]` is read is
 1. [`::Bundler::LockfileParser::parse_source`](https://github.com/rubygems/rubygems/blob/bundler-v2.4.12/bundler/lib/bundler/lockfile_parser.rb#L109C17-L147)
 1. [`::Bundler::LockfileParser::initialize`](https://github.com/rubygems/rubygems/blob/bundler-v2.4.12/bundler/lib/bundler/lockfile_parser.rb#L59C16-L94)
 1. [`::Dependabot::Bundler::FileFetcher::fetch_path_gemspec_paths`](https://github.com/dependabot/dependabot-core/blob/v0.217.0/bundler/lib/dependabot/bundler/file_fetcher.rb#L172-L191)
+
+A [search of bundler's use of `caches`](https://github.com/search?q=repo%3Arubygems%2Frubygems+caches+path%3A%2F%5Ebundler%5C%2F%2F+NOT+path%3A%2F%5Ebundler%5C%2Fspec%5C%2F%2F&type=code) and of [its use of `cache_path`](https://github.com/search?q=repo%3Arubygems%2Frubygems+cache_path+path%3A%2F%5Ebundler%5C%2F%2F+NOT+path%3A%2F%5Ebundler%5C%2Fspec%5C%2F%2F&type=code) don't make it immediately obvious why there needs to be an error if the path can't be found, despite the benefit of the doubt that it's used somewhere else to know where to look for and open the `Gemfile`.
