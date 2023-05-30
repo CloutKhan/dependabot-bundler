@@ -100,6 +100,8 @@ jobs:
         path: ${{ matrix.checkout-path }}
     - name: 📑 bundle env
       run: bundle env
+    - name: 📑 local state
+      run: ls -liath
     - name: 👀 Run bundler file fetcher
       run: |-
         ruby -e '
