@@ -86,12 +86,15 @@ jobs:
       run: gem install dependabot-omnibus -v ${{ matrix.dependabot-version }}
     - name: 📌 Pin bundler
       run: |-
-        gem install bundler -v 2.4.13
+        # gem install bundler -v 2.4.13
+        git clone https://github.com/rubygems/rubygems.git
+        cd rubygems/bundler && git checkout delay-cache-access && git checkout 0af32d3fcaf9c8020092bd4bf215ad6f70e9222c
         # 0af32d3fcaf9c8020092bd4bf215ad6f70e9222c is head of https://github.com/rubygems/rubygems/tree/delay-cache-access
         # The branch that is the source for https://github.com/rubygems/rubygems/pull/6694. Can bundler be used to reinstall itself?
-        printf "source 'https://rubygems.org'\ngem 'bundler', git: 'https://github.com/rubygems/rubygems.git', ref: '0af32d3', glob: 'bundler/bundler.gemspec'\n" > Gemfile
-        bundle install && rm Gemfile && rm Gemfile.lock && ls -liath
-        # gem install bundler -v 2.4.13
+        # printf "source 'https://rubygems.org'\ngem 'bundler', git: 'https://github.com/rubygems/rubygems.git', ref: '0af32d3', glob: 'bundler/bundler.gemspec'\n" > Gemfile
+        # bundle install && rm Gemfile && rm Gemfile.lock && ls -liath
+        gem build bundler.gemspec
+        gem install bundler-2.5.0.dev.gem
     - name: 🏁 Checkout
       uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       with:
