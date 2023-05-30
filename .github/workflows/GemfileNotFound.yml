@@ -88,7 +88,7 @@ jobs:
       run: |-
         # 0af32d3fcaf9c8020092bd4bf215ad6f70e9222c is head of https://github.com/rubygems/rubygems/tree/delay-cache-access
         # The branch that is the source for https://github.com/rubygems/rubygems/pull/6694. Can bundler be used to reinstall itself?
-        echo "gem 'bundler', git: 'git://github.com/rubygems/rubygems.git', ref: '0af32d3fcaf9c8020092bd4bf215ad6f70e9222c' glob: 'bundler/bundler.gemspec'" > Gemfile
+        printf "source 'https://rubygems.org'\ngem 'bundler', git: 'git://github.com/rubygems/rubygems.git', ref: '0af32d3fcaf9c8020092bd4bf215ad6f70e9222c' glob: 'bundler/bundler.gemspec'\n" > Gemfile
         bundle install
         # gem install bundler -v 2.4.13
     - name: 🏁 Checkout
