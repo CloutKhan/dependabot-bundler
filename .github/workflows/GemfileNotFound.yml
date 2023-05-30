@@ -85,7 +85,7 @@ jobs:
     - name: 🤖 Install dependabot
       run: gem install dependabot-omnibus -v ${{ matrix.dependabot-version }}
     - name: 📌 Pin bundler
-      run: gem install bundler -v 2.4.12
+      run: gem install bundler -v 2.4.13
     - name: 🏁 Checkout
       uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       with:
