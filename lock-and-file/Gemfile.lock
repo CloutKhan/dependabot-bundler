@@ -1,10 +1,9 @@
-# https://github.com/dependabot/smoke-tests/blob/main/bundler/Gemfile.lock
 GIT
   remote: git@github.com:rack/rack.git
-  revision: f3cf79d6460dc592767941806d1b2b7008f73e01
-  tag: 2.1.4
+  revision: c8347eff9ce67c5e0db337f25ef8c7720a716e61
+  tag: v3.0.8
   specs:
-    rack (2.1.4)
+    rack (3.0.8)
 
 GEM
   remote: https://rubygems.org/
